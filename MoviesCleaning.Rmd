@@ -1,0 +1,44 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(readr)
+data <- read_csv("movies.csv")
+summary(data)
+na_count <-sapply(data, function(x) sum(is.na(x)))
+na_count
+```
+```{r}
+print(data)
+```
+```{r}
+library(stringr)
+library(dplyr)
+data <- data %>%
+      mutate_at("Gross", str_replace, "\\$", "")
+data <- data %>%
+      mutate_at("Gross", str_replace, "M", "")
+```
+```{r}
+data$Gross <- as.numeric(data$Gross)
+```
+```{r}
+summary(data)
+```
+```{r}
+library(tidyr)
+data <- data %>% drop_na(YEAR,GENRE,RATING,VOTES)
+summary(data)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
