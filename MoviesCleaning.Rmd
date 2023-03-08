@@ -33,10 +33,18 @@ summary(data)
 ```
 ```{r}
 library(tidyr)
-data <- data %>% drop_na(YEAR,GENRE,RATING,VOTES)
+data <- data %>% drop_na(YEAR,GENRE,RATING,VOTES,RunTime)
 summary(data)
 ```
-
+```{r}
+data$GENRE <- gsub('\n', '', data$GENRE)
+data$`ONE-LINE` <- gsub('\n', '', data$`ONE-LINE`)
+data$STARS <- gsub('\n', '', data$STARS)
+data$YEAR <- gsub('[()]', '', data$YEAR)
+print(data)
+```
+#write a function for YEAR column to split into two - YEAR_START and YEAR_END 
+#if "-" not found, then YEAR_START = YEAR_END, elif "-" found but no number after this sign, YEAR_END = "ongoing"
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
 
 When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
